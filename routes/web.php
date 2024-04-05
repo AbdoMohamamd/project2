@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [UserController::class,'show']);
-Route::get('/users/{id}', [UserController::class, 'destroy']);
+Route::get('/users/{id}/destroy', [UserController::class, 'destroy']);
 
 Route::get('/users/{id}/restore', [UserController::class, 'restore']);
