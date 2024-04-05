@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Flight;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,9 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Passenger::factory(1)->create(['flight_id'=>51]);
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\Flight::factory()->count(50)->create();
+        
+      
+        \App\Models\User::factory(10)->create();
+        \App\Models\Flight::factory()->count(50)->create();
+        \App\Models\Passenger::factory(1000)->create(['flight_id' => rand(1,50)]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

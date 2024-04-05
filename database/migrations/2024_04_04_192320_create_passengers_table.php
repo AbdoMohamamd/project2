@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->date('dob');
             $table->date('passport_expiry_date');
+            $table->unsignedBigInteger('flight_id')->nullable();
+            $table->foreign('flight_id')->references('id')->on('flights')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,7 +29,8 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
+    {  
         Schema::dropIfExists('passengers');
+      
     }
 };

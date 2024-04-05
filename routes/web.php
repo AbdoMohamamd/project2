@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [UserController::class,'show']);
+Route::get('/', [UserController::class, 'show']);
+Route::get('/users/create', [UserController::class, 'create']);
+Route::post('/users/store', [UserController::class, 'store']);
+Route::get('/users/{id}/read', [UserController::class, 'read']);
+Route::get('/users/{user}/update', [UserController::class, 'update']);
 Route::get('/users/{id}/destroy', [UserController::class, 'destroy']);
-
 Route::get('/users/{id}/restore', [UserController::class, 'restore']);
