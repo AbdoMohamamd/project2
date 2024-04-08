@@ -23,6 +23,7 @@ class PassengerFactory extends Factory
             'password' => bcrypt(fake()->password),
             'dob' => fake()->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
             'passport_expiry_date' => fake()->dateTimeBetween('+1 years', '+10 years')->format('Y-m-d'),
+            'flight_id'=>rand(1,50),
         ];
     }
 }

@@ -15,9 +15,10 @@ class Passenger extends Model
         'password',
         'dob',
         'passport_expiry_date',
+        'flight_id'
     ];
     public function flights()
     {
-        return $this->belongsToMany(Flight::class);
+        return $this->belongsTo(Flight::class);
     }
 }

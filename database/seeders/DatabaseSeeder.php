@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         
       
-        \App\Models\User::factory(10)->create();
-        \App\Models\Flight::factory()->count(50)->create();
-        \App\Models\Passenger::factory(1000)->create(['flight_id' => rand(1,50)]);
+        // \App\Models\User::factory(10)->create();
+        // \App\Models\Flight::factory()->count(50)->create();
+        \App\Models\Passenger::factory(1000)->create();
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

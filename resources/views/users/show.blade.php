@@ -1,21 +1,35 @@
 <x-layout>
     <div class="container mx-auto">
+        <div class="flex items-center  ">
+            <a href="/" class="font-bold text-xl">back</a>
+            <h1 class="text-3xl font-semibold text-center mb-6 flex-1">List of Users</h1>
+        </div>
+        <table class="w-full border-collapse border border-gray-200">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="py-3 px-4 border border-gray-200">ID</th>
+                    <th class="py-3 px-4 border border-gray-200">Name</th>
+                    <th class="py-3 px-4 border border-gray-200">Email</th>
+                    <th class="py-3 px-4 border border-gray-200">Actions</th>
 
-        <table class="border-collapse border border-black w-full">
-            @foreach ($users as $user)
-                <tr class="border border-black">
-                    <td class="border border-black px-4 py-2">{{ $user->name }}</td>
-                    <td class="border border-black px-4 py-2">{{ $user->email }}</td>
-                    <td class="border border-black px-4 py-2">
-                        <button class="bg-red-500 rounded-lg py-2 px-4 text-white"><a
-                                href="/users/{{ $user->id }}/destroy">Delete</a></button>
-                        <button class="bg-blue-500 rounded-lg py-2 px-4 text-white"><a
-                                href="/users/{{$user->id}}/update">Update</a></button>
-
-                    </td>
                 </tr>
-               
-            @endforeach
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                    <tr>
+                        <td class="py-3 px-4 border border-gray-200">{{ $user->id }}</td>
+                        <td class="py-3 px-4 border border-gray-200">{{ $user->name }}</td>
+                        <td class="py-3 px-4 border border-gray-200">{{ $user->email }}</td>
+                        <td class="py-3 px-4 border border-gray-200">
+                            <button class="bg-red-500 rounded-lg py-2 px-4 text-white"><a
+                                    href="/users/{{ $user->id }}/delete">Delete</a></button>
+                            <button class="bg-blue-500 rounded-lg py-2 px-4 text-white"><a
+                                    href="/users/{{ $user->id }}/update">Update</a></button>
+
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
         <button class="bg-green-500 rounded-lg py-2 px-4 text-white mt-4"><a href="/users/create">Create a new
                 user</a></button>

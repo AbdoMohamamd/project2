@@ -1,57 +1,56 @@
 <x-layout>
     <div class="flex items-center justify-center h-screen">
         <div class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-2xl font-bold mb-6">Update {{ $passenger->name }} Info</h2>
-            <form method="POST" action="/passengers/{{ $passenger->id }}/change">
+            <h2 class="text-2xl font-bold mb-6">Create a new flight</h2>
+            <form method="POST" action="/flights/store">
                 @csrf
-                @method('PUT')
                 <div class="mb-4">
-                    <label for="first_name" class="block text-gray-700 font-bold mb-2">First Name:</label>
-                    <input type="text" name="first_name" id="first_name"
+                    <label for="number" class="block text-gray-700 font-bold mb-2">number:</label>
+                    <input type="number" name="number" id="number"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required value="{{ $passenger->first_name }}" />
-
-                    @error('first_name')
-                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="last_name" class="block text-gray-700 font-bold mb-2">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name"
-                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required value="{{ $passenger->last_name }}" />
-
-                    @error('last_name')
+                        value="{{ old('number') }}">
+                    @error('number')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label>
-                    <input type="email" name="email" id="email"
+                    <label for="departure_city" class="block text-gray-700 font-bold mb-2">Departure City:</label>
+                    <input type="text" name="departure_city" id="departure_city"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required value="{{ $passenger->email }}">
-                    @error('email')
+                        required value="{{ old('departure_city') }}" />
+
+                    @error('departure_city')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
                 </div>
-
                 <div class="mb-4">
-                    <label for="passport_expiry_date" class="block text-gray-700 font-bold mb-2">Passport Expiry date:</label>
-                    <input type="date" name="passport_expiry_date" id="passport_expiry_date" pattern="\d{4}-\d{2}-\d{2}"
+                    <label for="arrival_city" class="block text-gray-700 font-bold mb-2">Arrival City:</label>
+                    <input type="text" name="arrival_city" id="arrival_city"
+                        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required value="{{ old('arrival_city') }}" />
+
+                    @error('arrival_city')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="departure_time" class="block text-gray-700 font-bold mb-2">Departure time:</label>
+                    <input type="datetime-local" name="departure_time" id="departure_time" pattern="\d{4}-\d{2}-\d{2}"
                         placeholder="YYYY-MM-DD"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required value="{{ $passenger->passport_expiry_date }}">
-                    @error('passport_expiry_date')
+                        required value="{{ old('departure_time') }}">
+                    @error('departure_time')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label for="flight_number" class="block text-gray-700 font-bold mb-2">flight_number:</label>
-                    <input type="number" name="flight_number" id="flight_number"
+                    <label for="arrival_time" class="block text-gray-700 font-bold mb-2">Arrival time:</label>
+                    <input type="datetime-local" name="arrival_time" id="arrival_time" pattern="\d{4}-\d{2}-\d{2}"
+                        placeholder="YYYY-MM-DD"
                         class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required value="{{ $passenger->flight_number }}">
-                    @error('flight_number')
+                        required value="{{ old('arrival_time') }}">
+                    @error('arrival_time')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
                 </div>
@@ -59,7 +58,7 @@
                 <div class="flex items-center justify-between">
                     <button type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Update passenger
+                        Create Flight
                     </button>
                 </div>
             </form>

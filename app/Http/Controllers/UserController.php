@@ -31,14 +31,28 @@ class UserController extends Controller
             ]
 
         );
-        $formFields['password'] = bcrypt($formFields['password']);
+   
         User::create($formFields);
-        return redirect('/')->with('message', "User Successfully Created");
+        return redirect('/users/show')->with('message', "User Successfully Created");
     }
     public function update(User $user)
     {
-
+        
         return view('users.update', ['user' => $user]);
+    }
+    public function change(Request $request,User $user){
+     
+        $formFields = $request->validate(
+            [
+                'name' => ['required'],
+                'email' => ['required', 'email'],
+                'password' => ['required', 'min:6']
+            ]
+
+        );
+   
+        $user->update($formFields);
+        return redirect('/users/show')->with('message', 'User was updated Successfully');
     }
 
     public function destroy($id)
