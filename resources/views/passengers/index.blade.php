@@ -1,4 +1,4 @@
-<x-layout>
+{{-- <x-layout>
     <div class="container mx-auto py-8">
 
         <div class="flex items-center  ">
@@ -58,4 +58,4 @@
             $("#alert").fadeOut("slow");
         }, 5000);
     });
-</script>
+</script> --}}

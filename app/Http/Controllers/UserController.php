@@ -9,17 +9,25 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function show()
+    public function index()
     {
-        $users = User::all();
-
-        return view('users.show', ['users' => $users]);
+        return User::all();
     }
 
-    public function create()
+    public function show($id)
     {
-        return view('users.create');
+        return User::find($id);
     }
+    public function showList()
+    {
+
+        return view('users.show');
+    }
+
+    // public function create()
+    // {
+    //     return view('users.create');
+    // }
 
     public function store(Request $request)
     {
@@ -31,17 +39,18 @@ class UserController extends Controller
             ]
 
         );
-   
-        User::create($formFields);
-        return redirect('/users/show')->with('message', "User Successfully Created");
+
+        return User::create($formFields);
     }
-    public function update(User $user)
+    public function update($id, Request $request)
     {
-        
-        return view('users.update', ['user' => $user]);
+        $user = User::find($id);
+        $user->update($request->all());
+        return $user;
     }
-    public function change(Request $request,User $user){
-     
+    public function change(Request $request, User $user)
+    {
+
         $formFields = $request->validate(
             [
                 'name' => ['required'],
@@ -50,7 +59,7 @@ class UserController extends Controller
             ]
 
         );
-   
+
         $user->update($formFields);
         return redirect('/users/show')->with('message', 'User was updated Successfully');
     }
@@ -58,17 +67,17 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
-        return Redirect::back()->with('message', 'User was deleted');
+        return  $user->delete();
     }
 
- 
+
     public function restore($id)
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
-
-       
     }
-    
+    public function search($name)
+    {
+       return User::where('name', 'Like', '%' . $name . '%')->get();
+    }
 }

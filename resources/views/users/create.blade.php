@@ -1,4 +1,4 @@
-<x-layout>
+{{-- <x-layout>
     <div class="flex items-center justify-center h-screen">
         <div class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2 class="text-2xl font-bold mb-6">Create New User</h2>
@@ -44,4 +44,4 @@
             </form>
         </div>
     </div>
-</x-layout>
+</x-layout> --}}

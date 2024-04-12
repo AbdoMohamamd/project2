@@ -1,4 +1,4 @@
-<x-layout>
+{{-- <x-layout>
     <div class="container mx-auto">
         <div class="flex items-center  ">
             <a href="/" class="font-bold text-xl">back</a>
@@ -49,4 +49,4 @@
             $("#alert").fadeOut("slow");
         }, 5000);
     });
-</script>
+</script> --}}
