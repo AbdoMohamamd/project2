@@ -1,4 +1,4 @@
-{{-- <form method="POST" action="{{ '/login' }}">
+ {{-- <form method="POST" action="{{ '/api/login' }}">
     @csrf
 
     <div>
@@ -13,5 +13,4 @@
 
     <div>
         <button type="submit">Login</button>
-    </div>
-</form> 
+    </div> --}}

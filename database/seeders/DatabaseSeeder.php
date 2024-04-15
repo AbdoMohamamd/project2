@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
     {
 
 
-        // \App\Models\User::factory(1)->create(['name' => 'abdo', 'password' => "axl.mgx.as", 'email' => 'abdo.@gmail.com', 'email_verified_at' => now(), 'remember_token' => "sadfasdfaewfwegeafew"]);
+        // \App\Models\User::factory(10)->create();
+
         // \App\Models\Flight::factory()->count(50)->create();
         // \App\Models\Passenger::factory(1000)->create();
 

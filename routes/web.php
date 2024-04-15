@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 // Route::post('/login', [AuthController::class, 'login']);
 // Route::get('/logout', [AuthController::class, 'logout']);
-// Route::get('/',[Controller::class,'index'])->middleware('auth:sanctum');
+// Route::get('/',[Controller::class,'index']);
 // //show users list
 // Route::get('/users/show', [UserController::class, 'showList']);
 

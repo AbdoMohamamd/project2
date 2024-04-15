@@ -45,8 +45,10 @@ class FlightController extends Controller
     }
     public function search(Request $request)
     {
-      
-        return Flight::where('arrival_city', 'Like', '%' . $request->arrival_city . '%','And','departure_city','Like','%'.$request->departure_city.'%' )->get();
+
+        return Flight::where('arrival_city', 'like', '%' . $request->arrival_city . '%')
+            ->where('departure_city', 'like', '%' . $request->departure_city . '%')
+            ->get();
     }
     // public function show()
     // {

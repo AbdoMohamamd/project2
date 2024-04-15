@@ -18,16 +18,8 @@ class UserController extends Controller
     {
         return User::find($id);
     }
-    public function showList()
-    {
+    
 
-        return view('users.show');
-    }
-
-    // public function create()
-    // {
-    //     return view('users.create');
-    // }
 
     public function store(Request $request)
     {
@@ -35,7 +27,8 @@ class UserController extends Controller
             [
                 'name' => ['required'],
                 'email' => ['required', 'email'],
-                'password' => ['required', 'min:6']
+                'password' => ['required', 'min:6'],
+                'role_id'=>['required','boolean']
             ]
 
         );
@@ -48,21 +41,21 @@ class UserController extends Controller
         $user->update($request->all());
         return $user;
     }
-    public function change(Request $request, User $user)
-    {
+    // public function change(Request $request, User $user)
+    // {
 
-        $formFields = $request->validate(
-            [
-                'name' => ['required'],
-                'email' => ['required', 'email'],
-                'password' => ['required', 'min:6']
-            ]
+    //     $formFields = $request->validate(
+    //         [
+    //             'name' => ['required'],
+    //             'email' => ['required', 'email'],
+    //             'password' => ['required', 'min:6']
+    //         ]
 
-        );
+    //     );
 
-        $user->update($formFields);
-        return redirect('/users/show')->with('message', 'User was updated Successfully');
-    }
+    //     $user->update($formFields);
+    //     return redirect('/users/show')->with('message', 'User was updated Successfully');
+    // }
 
     public function destroy($id)
     {
