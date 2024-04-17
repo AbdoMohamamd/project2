@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Flight;
 use App\Models\Passenger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 
 class PassengerContoller extends Controller
@@ -12,8 +13,12 @@ class PassengerContoller extends Controller
 
     public function index(Request $request)
     {
+
         if ($request->user('sanctum')->can('view passengers')) {
-            return Passenger::all();
+            $passengers = Cache::remember('passengersInfo', 60 * 2, function () {
+                return Passenger::all();
+            });
+            return $passengers;
         } else {
             return "Only admin and authenticated users can view passengers";
         }

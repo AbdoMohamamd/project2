@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', function (Request $request) {
-            return $request->user('sanctum')->hasRole('writer') ? Limit::none() : Limit::perMinute(10)->response(function () {
+            return ($request->user('sanctum')==null?Limit::none() :$request->user('sanctum')->hasRole('admin')) ? Limit::none() : Limit::perMinute(10)->response(function () {
                 return response("You are allowed 10 request per minute", 429);
             });
         });
