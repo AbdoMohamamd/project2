@@ -9,46 +9,71 @@ use Illuminate\Support\Facades\Redirect;
 class FlightController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return Flight::all();
+
+        if ($request->user('sanctum')->can('view flights')) {
+            return Flight::all();
+        } else {
+            return "Only admin and authenticated users can view fligts";
+        }
     }
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return Flight::find($id);
+        if ($request->user('sanctum')->can('view flights')) {
+            return Flight::find($id);
+        } else {
+            return "Only admin and authenticated users can view fligts";
+        }
     }
     public function store(Request $request)
     {
-        $formFields = $request->validate(
-            [
-                'number' => ['required'],
-                'departure_city' => ['required'],
-                'arrival_city' => ['required'],
-                'departure_time' => ['required'],
-                'arrival_time' => ['required'],
-            ]
+        if ($request->user('sanctum')->can('create flights')) {
+            $formFields = $request->validate(
+                [
+                    'number' => ['required'],
+                    'departure_city' => ['required'],
+                    'arrival_city' => ['required'],
+                    'departure_time' => ['required'],
+                    'arrival_time' => ['required'],
+                ]
 
-        );
+            );
 
-        return Flight::create($formFields);
+            return Flight::create($formFields);
+        } else {
+            return "only admin can create flights";
+        }
     }
     public function update($id, Request $request)
     {
-        $Flight = Flight::find($id);
-        $Flight->update($request->all());
-        return $Flight;
+        if ($request->user('sanctum')->can('update flights')) {
+            $Flight = Flight::find($id);
+            $Flight->update($request->all());
+            return $Flight;
+        } else {
+            return 'Only admin can update flights';
+        }
     }
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $Flight = Flight::findOrFail($id);
-        return  $Flight->delete();
+        if ($request->user('sanctum')->can('delete flights')) {
+            $Flight = Flight::findOrFail($id);
+            return  $Flight->delete();
+        } else {
+            return 'only admin can delete flights';
+        }
     }
     public function search(Request $request)
     {
 
-        return Flight::where('arrival_city', 'like', '%' . $request->arrival_city . '%')
-            ->where('departure_city', 'like', '%' . $request->departure_city . '%')
-            ->get();
+        if ($request->user('sanctum')->can('search flights')) {
+            return Flight::where('arrival_city', 'like', '%' . $request->arrival_city . '%')
+                ->where('departure_city', 'like', '%' . $request->departure_city . '%')
+                ->get();
+        } else {
+            return "Only admin and authenticated users can search flights";
+        }
     }
     // public function show()
     // {

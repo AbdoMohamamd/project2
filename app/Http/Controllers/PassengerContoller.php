@@ -10,45 +10,69 @@ use Illuminate\Support\Facades\Redirect;
 class PassengerContoller extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return Passenger::all();
+        if ($request->user('sanctum')->can('view passengers')) {
+            return Passenger::all();
+        } else {
+            return "Only admin and authenticated users can view passengers";
+        }
     }
-    public function show($id)
+    public function show($id, Request $request)
     {
-        return Passenger::find($id);
+        if ($request->user('sanctum')->can('view passengers')) {
+            return Passenger::find($id);
+        }
     }
     public function store(Request $request)
     {
-        $formFields = $request->validate(
-            [
-                'first_name' => ['required'],
-                'last_name' => ['required'],
-                'dob' => ['required'],
-                'password' => ['required'],
-                'passport_expiry_date' => ['required'],
-                'email' => ['required', 'email'],
-                'flight_number' => ['required']
-            ]
+        if ($request->user('sanctum')->can('create passengers')) {
 
-        );
+            $formFields = $request->validate(
+                [
+                    'first_name' => ['required'],
+                    'last_name' => ['required'],
+                    'dob' => ['required'],
+                    'password' => ['required'],
+                    'passport_expiry_date' => ['required'],
+                    'email' => ['required', 'email'],
+                    'flight_number' => ['required']
+                ]
 
-        return Passenger::create($formFields);
+            );
+
+            return Passenger::create($formFields);
+        } else {
+            return 'Only admin can create passengers';
+        }
     }
     public function update($id, Request $request)
     {
-        $Passenger = Passenger::find($id);
-        $Passenger->update($request->all());
-        return $Passenger;
+
+        if ($request->user('sanctum')->can('update passengers')) {
+            $Passenger = Passenger::find($id);
+            $Passenger->update($request->all());
+            return $Passenger;
+        } else {
+            return "Only admin can update passengers";
+        }
     }
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $Passenger = Passenger::findOrFail($id);
-        return  $Passenger->delete();
+        if ($request->user('sanctum')->can('delete passengers')) {
+            $Passenger = Passenger::findOrFail($id);
+            return  $Passenger->delete();
+        } else {
+            return "Only admin can delete passengers";
+        }
     }
-    public function search($name)
+    public function search($name, Request $request)
     {
-        return Passenger::where('first_name', 'Like', '%' . $name . '%')->get();
+        if ($request->user('sanctum')->can('search passengers')) {
+            return Passenger::where('first_name', 'Like', '%' . $name . '%')->get();
+        } else {
+            return "Only admin and authenticated users can search passengers by their name";
+        }
     }
     // public function show()
     // {

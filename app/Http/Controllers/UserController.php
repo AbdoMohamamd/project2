@@ -9,37 +9,55 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function index()
+
+
+    public function index(Request $request)
     {
-        return User::all();
+        if ($request->user('sanctum')->can('view users')) {
+            return User::all();
+        } else {
+            return "only admin and authenticated users can view users";
+        }
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
-        return User::find($id);
+        if ($request->user('sanctum')->can('view users')) {
+            return User::find($id);
+        } else {
+            return "only admin and authenticated users can view users by their id";
+        }
     }
-    
+
 
 
     public function store(Request $request)
     {
-        $formFields = $request->validate(
-            [
-                'name' => ['required'],
-                'email' => ['required', 'email'],
-                'password' => ['required', 'min:6'],
-                'role_id'=>['required','boolean']
-            ]
+        if ($request->user('sanctum')->can('create users')) {
+            $formFields = $request->validate(
+                [
+                    'name' => ['required'],
+                    'email' => ['required', 'email'],
+                    'password' => ['required', 'min:6'],
 
-        );
+                ]
 
-        return User::create($formFields);
+            );
+
+            return User::create($formFields);
+        } else {
+            return "Only admin can create users";
+        }
     }
     public function update($id, Request $request)
     {
-        $user = User::find($id);
-        $user->update($request->all());
-        return $user;
+        if ($request->user('sanctum')->can(('update users'))) {
+            $user = User::find($id);
+            $user->update($request->all());
+            return $user;
+        } else {
+            return "Only admin can update users";
+        }
     }
     // public function change(Request $request, User $user)
     // {
@@ -57,20 +75,33 @@ class UserController extends Controller
     //     return redirect('/users/show')->with('message', 'User was updated Successfully');
     // }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        return  $user->delete();
+        if ($request->user('sanctum')->can('delete users')) {
+            $user = User::findOrFail($id);
+            return  $user->delete();
+        } else {
+            return "Only admin can delete users";
+        }
     }
 
 
-    public function restore($id)
+    // public function restore($id, Request $request)
+    // {
+
+    //     if ($request->user('sanctum')->can('delete users')) {
+    //         $user = User::withTrasffhed()->findOrFail($id);
+    //         $user->restore();
+    //     } else {
+    //         return "Only admin can create users";
+    //     }
+    // }
+    public function search($name, Request $request)
     {
-        $user = User::withTrashed()->findOrFail($id);
-        $user->restore();
-    }
-    public function search($name)
-    {
-       return User::where('name', 'Like', '%' . $name . '%')->get();
+        if ($request->user('sanctum')->can('search users')) {
+            return User::where('name', 'Like', '%' . $name . '%')->get();
+        } else {
+            return "Only admin and authenticated users can search users by their name";
+        }
     }
 }
